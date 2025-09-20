@@ -1,0 +1,24 @@
+# Python
+**/__pycache__/
+*.py[cod]
+
+# Django media files
+/backend/media/
+
+# Environment variables
+.env
+
+# Virtual environment
+/venv/
+
+# Node modules
+/frontend/node_modules/
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+
+# IDE - Visual Studio Code
+.vscode/

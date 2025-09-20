@@ -1,0 +1,399 @@
+.layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  width: 100vw;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.header {
+  display: flex;
+  height: 80px;
+  align-items: center;
+  background-color: #222;
+}
+
+.header-content {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  padding: 0 20px;
+}
+
+.header__space {
+  flex-grow: 1;
+  min-width: 100px;
+  background-color: #f5f5f5;
+}
+
+.home {
+  font-size: 24px;
+  height: 80px;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  will-change: filter;
+  transition: filter 300ms;
+  cursor: pointer;
+  gap: 10px;
+  user-select: none;
+}
+
+.home .cloud-logo {
+  height: 120px; 
+  cursor: pointer;
+}
+
+.logo-text {
+  color: white;
+  font-weight: 700;
+  font-size: 1.5rem;
+  white-space: nowrap;
+}
+
+.content {
+  flex: 1; 
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
+  padding: 20px;
+  background-color: #464646; 
+  color: white;
+  text-align: center;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  max-width: 320px;
+  margin: 0 auto;
+}
+
+.login-form input {
+  padding: 10px 12px;
+  font-size: 1rem;
+  border: 1px solid #8ef064;
+  border-radius: 6px;
+  background-color: #333;
+  color: white;
+  transition: border-color 0.3s ease;
+}
+
+.login-form input::placeholder {
+  color: #aaa;
+}
+
+.login-form input:focus {
+  outline: none;
+  border-color: #04e790;
+  background-color: #3a3a3a;
+}
+
+.login-form textarea {
+  padding: 10px 12px;
+  font-size: 1rem;
+  border: 1px solid #8ef064;
+  border-radius: 6px;
+  background-color: #333;
+  color: white;
+  resize: vertical;
+  min-height: 80px;
+  transition: border-color 0.3s ease;
+}
+
+.login-form textarea::placeholder {
+  color: #aaa;
+}
+
+.login-form textarea:focus {
+  outline: none;
+  border-color: #04e790;
+  background-color: #3a3a3a;
+}
+
+.login-form button {
+  padding: 12px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  background-color: #8ef064;
+  border: none;
+  border-radius: 6px;
+  color: #333;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  user-select: none;
+}
+
+.login-form button:disabled {
+  background-color: #6a6a6a;
+  cursor: not-allowed;
+  color: #ccc;
+}
+
+.login-form button:hover:not(:disabled) {
+  background-color: #9be118;
+}
+
+.error-message {
+  color: #ff6b6b;
+  margin-top: 10px;
+  font-weight: 600;
+}
+
+.page-center h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 25px;
+  color: white;
+}
+
+.page-center p {
+  margin-top: 20px;
+  color: #ccc;
+}
+
+.page-center p a {
+  color: #8ef064;
+  text-decoration: none;
+}
+
+.page-center p a:hover {
+  text-decoration: underline;
+}
+
+.ant-btn-primary {
+  background-color: #8ef064 !important;
+  color: #333 !important;
+}
+
+.ant-btn-primary:hover {
+  background-color: #9be118 !important;
+}
+
+.ant-btn-default {
+  background-color: #8ef064 !important;
+  color: #333 !important;
+}
+
+.ant-btn-default:hover {
+  background-color: #9be118 !important;
+}
+
+.uploader {
+  display: flex;
+  margin: 0 auto 20px auto;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px; 
+  margin-bottom: 20px;
+  width: 320px;
+}
+
+.uploader .ant-btn {
+  width: 150px;
+}
+
+.uploader .ant-input-textarea {
+  width: 100%;
+}
+
+.uploader .actions {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.footer {
+  background-color: #222;
+  color: white;
+  padding: 10px 0;
+  text-align: center;
+}
+
+.admin-page {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+  color: white;
+}
+
+.admin-page h1 {
+  margin-bottom: 20px;
+  font-weight: 700;
+  font-size: 2rem;
+  color: #8ef064;
+}
+
+.user-grid {
+  list-style: none;
+  padding: 0;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, max-content));
+  justify-content: center;
+  gap: 20px;
+  max-width: 900px;
+}
+
+.user-card {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  margin: 0;
+  padding: 15px 20px;
+  background-color: #333;
+  border-radius: 8px;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: nowrap;
+}
+
+.user-card:hover {
+  background-color: #3a3a3a;
+}
+
+.user-card div {
+  font-size: 1rem;
+  margin-bottom: 8px;
+}
+
+.user-card div:last-child {
+  margin-bottom: 0;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.user-card-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.manage-files-link {
+  color: #8ef064;
+  font-weight: 600;
+  text-decoration: none;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.manage-files-link:hover {
+  text-decoration: underline;
+}
+
+.user-card-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.user-card button {
+  background-color: #8ef064;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 12px;
+  cursor: pointer;
+  font-weight: 600;
+  color: #333;
+  transition: background-color 0.3s ease;
+}
+
+.user-card button:hover {
+  background-color: #9be118;
+}
+
+.user-card button:disabled {
+  background-color: #6a6a6a;
+  cursor: not-allowed;
+  color: #ccc;
+}
+
+.user-card a {
+  color: #8ef064;
+  text-decoration: none;
+  font-weight: 600;
+  align-self: center;
+}
+
+.user-card a:hover {
+  text-decoration: underline;
+}
+
+.file-grid {
+  width: 100%;
+  max-width: 900px;  
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, max-content)); 
+  justify-content: center;
+  gap: 20px;
+  padding: 20px;
+  list-style: none;
+  margin: 0 auto;
+}
+
+.file-card {
+  background-color: #333;
+  border-radius: 8px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease;
+}
+
+.file-card:hover {
+  background-color: #3a3a3a;
+}
+
+.file-icon {
+  font-size: 3rem;
+  margin-bottom: 10px;
+}
+
+.file-info {
+  margin-bottom: 15px;
+  color: white;
+}
+
+.file-info strong {
+  display: block;
+  font-size: 1.1rem;
+  margin-bottom: 5px;
+  color: #8ef064;
+}
+
+.file-info p {
+  font-size: 0.9rem;
+  margin: 2px 0;
+  color: #ccc;
+}
+
+.file-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+}
+
+.file-actions .ant-btn {
+  font-size: 0.85rem;
+  padding: 4px 8px;
+}
+
+.no-files {
+  grid-column: 1 / -1;
+  text-align: center;
+  color: #ccc;
+}
