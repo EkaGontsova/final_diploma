@@ -8,14 +8,18 @@ export const updateAdminStatus = createAsyncThunk(
   async ({ userId, isStaff }, { getState, rejectWithValue }) => {
     try {
       const token = getState().auth.token;
-      const response = await axios.patch(`${API_BASE}/users/${userId}/status/`, { is_staff: isStaff }, {
-        headers: { Authorization: `Token ${token}` }
-      });
+      const response = await axios.patch(
+        `${API_BASE}/users/${userId}/status/`,
+        { is_staff: isStaff },
+        {
+          headers: { Authorization: `Token ${token}` },
+        },
+      );
       return response.data;
     } catch {
       return rejectWithValue('Не удалось обновить статус администратора');
     }
-  }
+  },
 );
 
 export const getUsersList = createAsyncThunk(
@@ -23,12 +27,14 @@ export const getUsersList = createAsyncThunk(
   async (_, { getState, rejectWithValue }) => {
     try {
       const token = getState().auth.token;
-      const response = await axios.get(`${API_BASE}/users/`, { headers: { Authorization: `Token ${token}` } });
+      const response = await axios.get(`${API_BASE}/users/`, {
+        headers: { Authorization: `Token ${token}` },
+      });
       return response.data;
     } catch {
       return rejectWithValue('Не удалось загрузить список пользователей');
     }
-  }
+  },
 );
 
 export const deleteUser = createAsyncThunk(
@@ -36,12 +42,14 @@ export const deleteUser = createAsyncThunk(
   async (userId, { getState, rejectWithValue }) => {
     try {
       const token = getState().auth.token;
-      await axios.delete(`${API_BASE}/users/${userId}/delete/`, { headers: { Authorization: `Token ${token}` } });
+      await axios.delete(`${API_BASE}/users/${userId}/delete/`, {
+        headers: { Authorization: `Token ${token}` },
+      });
       return userId;
     } catch {
       return rejectWithValue('Не удалось удалить пользователя');
     }
-  }
+  },
 );
 
 const usersSlice = createSlice({
@@ -67,8 +75,12 @@ const usersSlice = createSlice({
       })
       .addCase(updateAdminStatus.fulfilled, (state, action) => {
         state.loading = false;
-        const index = state.users.findIndex(user => user.id === action.payload.id);
-        if (index !== -1) state.users[index] = action.payload;
+        const index = state.users.findIndex(
+          (user) => user.id === action.payload.id,
+        );
+        if (index !== -1) {
+          state.users[index] = action.payload;
+        }
       })
       .addCase(updateAdminStatus.rejected, (state, action) => {
         state.loading = false;
@@ -98,7 +110,9 @@ const usersSlice = createSlice({
       })
       .addCase(deleteUser.fulfilled, (state, action) => {
         state.loading = false;
-        state.users = state.users.filter(user => user.id !== action.payload);
+        state.users = state.users.filter(
+          (user) => user.id !== action.payload,
+        );
       })
       .addCase(deleteUser.rejected, (state, action) => {
         state.loading = false;
@@ -108,4 +122,5 @@ const usersSlice = createSlice({
 });
 
 export const { clearError } = usersSlice.actions;
+
 export default usersSlice.reducer;

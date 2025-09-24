@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { registerUser, clearError } from "../store/authSlice";
+import { message } from "antd";
 
 const RegisterPage = ({
   title = "Регистрация",
@@ -14,7 +15,7 @@ const RegisterPage = ({
   const navigate = useNavigate();
 
   const [fullName, setFullName] = useState("");
-  const [username, setUsername] = useState(""); // изменено с login
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -25,9 +26,21 @@ const RegisterPage = ({
     };
   }, [isAuthenticated, navigate, dispatch]);
 
+  useEffect(() => {
+    if (error) {
+      message.error(error);
+      dispatch(clearError());
+    }
+  }, [error, dispatch]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(registerUser({ username, email, password, full_name: fullName }));
+    dispatch(registerUser({ username, email, password, full_name: fullName }))
+      .unwrap()
+      .catch(err => {
+        const errorMsg = err?.message || err || "Ошибка при регистрации";
+        message.error(errorMsg);
+      });
   };
 
   return (
@@ -45,8 +58,8 @@ const RegisterPage = ({
         <input
           type="text"
           placeholder="Логин"
-          value={username}           // изменено с login
-          onChange={(e) => setUsername(e.target.value)} // изменено
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
           required
           autoComplete="username"
         />
@@ -70,7 +83,6 @@ const RegisterPage = ({
           {buttonText}
         </button>
       </form>
-      {error && <p className="error-message">{error}</p>}
       <p>
         Уже есть аккаунт? <Link to="/login">Войдите</Link>
       </p>

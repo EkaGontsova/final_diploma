@@ -8,6 +8,7 @@ import {
   clearError,
 } from "../store/usersSlice";
 import Loading from "../components/Loading";
+import { message } from "antd";
 
 const AdminPage = () => {
   const dispatch = useDispatch();
@@ -18,12 +19,23 @@ const AdminPage = () => {
 
   useEffect(() => {
     if (isAuthenticated && currentUser?.is_staff) {
-      dispatch(getUsersList());
+      dispatch(getUsersList())
+        .unwrap()
+        .catch(() => {
+          message.error("Ошибка загрузки списка пользователей");
+        });
     }
     return () => {
       dispatch(clearError());
     };
   }, [dispatch, isAuthenticated, currentUser?.is_staff]);
+
+  useEffect(() => {
+    if (error) {
+      message.error(error);
+      dispatch(clearError());
+    }
+  }, [error, dispatch]);
 
   if (!isAuthenticated) {
     return (
@@ -31,10 +43,7 @@ const AdminPage = () => {
         <h1>Нет доступа</h1>
         <p style={{ color: "#ccc" }}>
           Пожалуйста,{" "}
-          <Link
-            to="/login"
-            style={{ color: "#8ef064", textDecoration: "none" }}
-          >
+          <Link to="/login" style={{ color: "#8ef064", textDecoration: "none" }}>
             войдите
           </Link>{" "}
           для доступа к административной панели
@@ -58,15 +67,37 @@ const AdminPage = () => {
 
   const handleDeleteUser = (userId) => {
     if (window.confirm("Вы уверены, что хотите удалить этого пользователя?")) {
-      dispatch(deleteUser(userId)).then(() => dispatch(getUsersList()));
+      dispatch(deleteUser(userId))
+        .unwrap()
+        .then(() => {
+          dispatch(getUsersList())
+            .unwrap()
+            .catch(() => {
+              message.error("Ошибка обновления списка пользователей");
+            });
+          message.success("Пользователь удалён");
+        })
+        .catch(() => {
+          message.error("Ошибка при удалении пользователя");
+        });
     }
   };
 
   const handleToggleAdmin = (user) => {
     const newStatus = !user.is_staff;
-    dispatch(updateAdminStatus({ userId: user.id, isStaff: newStatus })).then(
-      () => dispatch(getUsersList())
-    );
+    dispatch(updateAdminStatus({ userId: user.id, isStaff: newStatus }))
+      .unwrap()
+      .then(() => {
+        dispatch(getUsersList())
+          .unwrap()
+          .catch(() => {
+            message.error("Ошибка обновления списка пользователей");
+          });
+        message.success("Статус администратора обновлен");
+      })
+      .catch(() => {
+        message.error("Ошибка при обновлении статуса администратора");
+      });
   };
 
   return (

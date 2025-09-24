@@ -2,13 +2,14 @@ import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { loginUser, clearError } from '../store/authSlice';
+import { message } from 'antd';
 
 const LoginPage = ({ title = "Вход", buttonText = "Войти" }) => {
   const { isAuthenticated, user, error, isLoading } = useSelector(state => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [username, setUsername] = useState(''); // изменено с login
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
   useEffect(() => {
@@ -24,9 +25,21 @@ const LoginPage = ({ title = "Вход", buttonText = "Войти" }) => {
     };
   }, [isAuthenticated, user?.is_staff, navigate, dispatch]);
 
+  useEffect(() => {
+    if (error) {
+      message.error(error);
+      dispatch(clearError());
+    }
+  }, [error, dispatch]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(loginUser({ username, password })); // изменено с login
+    dispatch(loginUser({ username, password }))
+      .unwrap()
+      .catch(err => {
+        const errorMsg = err?.message || err || "Ошибка при входе";
+        message.error(errorMsg);
+      });
   };
 
   return (
@@ -36,8 +49,8 @@ const LoginPage = ({ title = "Вход", buttonText = "Войти" }) => {
         <input
           type="text"
           placeholder="Логин"
-          value={username} // изменено с login
-          onChange={e => setUsername(e.target.value)} // изменено
+          value={username}
+          onChange={e => setUsername(e.target.value)}
           required
           autoComplete="username"
         />
@@ -51,7 +64,6 @@ const LoginPage = ({ title = "Вход", buttonText = "Войти" }) => {
         />
         <button type="submit" disabled={isLoading}>{buttonText}</button>
       </form>
-      {error && <p className="error-message">{error}</p>}
       <p>
         Нет аккаунта? <Link to="/register">Зарегистрируйтесь</Link>
       </p>
