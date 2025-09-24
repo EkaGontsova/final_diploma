@@ -70,7 +70,7 @@ python manage.py runserver
 ### 3.3 Frontend
 В отдельном терминале:
 ```bash
-cd ../frontend
+cd frontend
 npm install
 npm run dev
 ```
