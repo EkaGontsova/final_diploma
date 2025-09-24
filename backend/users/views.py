@@ -5,10 +5,11 @@ from rest_framework.views import APIView
 from knox.models import AuthToken
 from knox.views import LoginView as KnoxLoginView, LogoutView as KnoxLogoutView
 from django.contrib.auth import authenticate
-from .models import User 
+from .models import User
 from .serializers import UserSerializer, AdminSerializer
 from .permissions import IsOwnerOrAdmin
 from rest_framework.permissions import IsAdminUser
+
 
 class SignupView(generics.CreateAPIView):
     queryset = User.objects.all()
@@ -20,21 +21,25 @@ class SignupView(generics.CreateAPIView):
         serializer.is_valid(raise_exception=True)
         user = serializer.save()
         token = AuthToken.objects.create(user)[1]
-        return Response({
-            'user': serializer.data,
-            'token': token
-        }, status=status.HTTP_201_CREATED)
+        return Response(
+            {"user": serializer.data, "token": token},
+            status=status.HTTP_201_CREATED,
+        )
+
 
 class LoginView(KnoxLoginView):
     permission_classes = []
 
     def post(self, request, *args, **kwargs):
-        username = request.data.get('username')
-        password = request.data.get('password')
+        username = request.data.get("username")
+        password = request.data.get("password")
 
         user = authenticate(request, username=username, password=password)
         if user is None:
-            return Response({'error': 'Invalid credentials'}, status=status.HTTP_400_BAD_REQUEST)
+            return Response(
+                {"error": "Invalid credentials"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
 
         self.request.user = user
 
@@ -45,12 +50,14 @@ class LoginView(KnoxLoginView):
                 serializer = AdminSerializer(user)
             else:
                 serializer = UserSerializer(user)
-            response.data['user'] = serializer.data
+            response.data["user"] = serializer.data
 
         return response
 
+
 class LogoutView(KnoxLogoutView):
     permission_classes = [IsAuthenticated]
+
 
 class ProfileView(generics.RetrieveUpdateAPIView):
     queryset = User.objects.all()
@@ -64,15 +71,18 @@ class ProfileView(generics.RetrieveUpdateAPIView):
     def get_object(self):
         return self.request.user
 
+
 class UserListView(generics.ListAPIView):
     queryset = User.objects.all()
     serializer_class = AdminSerializer
     permission_classes = [IsAuthenticated, IsAdminUser]
 
+
 class UserDetailView(generics.RetrieveAPIView):
     queryset = User.objects.all()
     serializer_class = AdminSerializer
     permission_classes = [IsAuthenticated, IsAdminUser]
+
 
 class UpdateAdminStatusView(generics.UpdateAPIView):
     queryset = User.objects.all()
@@ -83,11 +93,15 @@ class UpdateAdminStatusView(generics.UpdateAPIView):
         instance = self.get_object()
         user = request.user
         if user.id == instance.id or instance.is_superuser:
-            return Response({"error": "Нельзя изменить статус для себя или superuser."}, status=status.HTTP_403_FORBIDDEN)
-        instance.is_staff = request.data.get('is_staff', instance.is_staff)
+            return Response(
+                {"error": "Нельзя изменить статус для себя или superuser."},
+                status=status.HTTP_403_FORBIDDEN,
+            )
+        instance.is_staff = request.data.get("is_staff", instance.is_staff)
         instance.save()
         serializer = self.get_serializer(instance)
         return Response(serializer.data)
+
 
 class DeleteUserView(generics.DestroyAPIView):
     queryset = User.objects.all()
@@ -97,6 +111,12 @@ class DeleteUserView(generics.DestroyAPIView):
         instance = self.get_object()
         user = request.user
         if user.id == instance.id or instance.is_superuser:
-            return Response({"error": "Нельзя удалить себя или superuser."}, status=status.HTTP_403_FORBIDDEN)
+            return Response(
+                {"error": "Нельзя удалить себя или superuser."},
+                status=status.HTTP_403_FORBIDDEN,
+            )
         self.perform_destroy(instance)
-        return Response({"message": "Пользователь удалён."}, status=status.HTTP_204_NO_CONTENT)
+        return Response(
+            {"message": "Пользователь удалён."},
+            status=status.HTTP_204_NO_CONTENT,
+        )

@@ -1,5 +1,6 @@
 from rest_framework.permissions import BasePermission, SAFE_METHODS
 
+
 class IsAdminOrIsOwner(BasePermission):
     """
     Разрешение: админ или владелец объекта.

@@ -9,10 +9,15 @@ import logging
 
 logger = logging.getLogger(__name__)
 
+
 class User(AbstractUser):
-    is_staff = models.BooleanField(default=False, verbose_name='Администратор')
-    storage_path = models.CharField(max_length=255, blank=True, default='', verbose_name='Путь к хранилищу')  # Относительный путь к хранилищу
-    full_name = models.CharField(max_length=255, blank=True, default='', verbose_name='Полное имя')
+    is_staff = models.BooleanField(default=False, verbose_name="Администратор")
+    storage_path = models.CharField(
+        max_length=255, blank=True, default="", verbose_name="Путь к хранилищу"
+    )
+    full_name = models.CharField(
+        max_length=255, blank=True, default="", verbose_name="Полное имя"
+    )
 
     def save(self, *args, **kwargs):
         if not self.storage_path and self.username:
@@ -22,6 +27,7 @@ class User(AbstractUser):
     def __str__(self):
         return self.username
 
+
 @receiver(pre_delete, sender=User)
 def auto_delete_user_storage(sender, instance, **kwargs):
     if instance.storage_path:
@@ -29,8 +35,19 @@ def auto_delete_user_storage(sender, instance, **kwargs):
         if os.path.isdir(storage_path):
             try:
                 shutil.rmtree(storage_path)
-                logger.info(f"Хранилище пользователя {instance.username} ({instance.storage_path}) удалено.")
+                logger.info(
+                    "Хранилище пользователя %s (%s) удалено.",
+                    instance.username,
+                    instance.storage_path,
+                )
             except Exception as e:
-                logger.error(f"Ошибка при удалении хранилища пользователя {instance.username}: {e}")
+                logger.error(
+                    "Ошибка при удалении хранилища пользователя %s: %s",
+                    instance.username,
+                    e,
+                )
     else:
-        logger.warning(f"Путь к хранилищу для пользователя {instance.username} не задан.")
+        logger.warning(
+            "Путь к хранилищу для пользователя %s не задан.",
+            instance.username,
+        )

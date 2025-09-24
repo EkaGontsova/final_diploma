@@ -8,26 +8,46 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='File',
+            name="File",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('file', models.FileField(upload_to=files.models.user_directory_path)),
-                ('file_name', models.CharField(blank=True, max_length=255)),
-                ('comment', models.TextField(blank=True, null=True)),
-                ('size', models.PositiveBigIntegerField(blank=True, null=True)),
-                ('uploaded', models.DateTimeField(auto_now_add=True)),
-                ('downloaded', models.DateTimeField(blank=True, null=True)),
-                ('special_link', models.CharField(blank=True, max_length=32, null=True, unique=True)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "file",
+                    models.FileField(
+                        upload_to=files.models.user_directory_path
+                    ),
+                ),
+                ("file_name", models.CharField(blank=True, max_length=255)),
+                ("comment", models.TextField(blank=True, null=True)),
+                (
+                    "size",
+                    models.PositiveBigIntegerField(blank=True, null=True),
+                ),
+                ("uploaded", models.DateTimeField(auto_now_add=True)),
+                ("downloaded", models.DateTimeField(blank=True, null=True)),
+                (
+                    "special_link",
+                    models.CharField(
+                        blank=True, max_length=32, null=True, unique=True
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'Файл',
-                'verbose_name_plural': 'Файлы',
-                'ordering': ['file_name'],
+                "verbose_name": "Файл",
+                "verbose_name_plural": "Файлы",
+                "ordering": ["file_name"],
             },
         ),
     ]
