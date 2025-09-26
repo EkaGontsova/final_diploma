@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { useSearchParams } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 import {
   getFilesList,
   clearError,
@@ -10,44 +10,44 @@ import {
   downloadFile,
   getFileLink,
   viewFile,
-} from "../store/filesSlice";
-import { Button, Modal, Input, message } from "antd";
-import Loading from "../components/Loading";
-import Uploader from "../components/Uploader";
+} from '../store/filesSlice';
+import { Button, Modal, Input, message } from 'antd';
+import Loading from '../components/Loading';
+import Uploader from '../components/Uploader';
 
 const formatSizeMB = (sizeInBytes) => {
-  if (!sizeInBytes) return "0 MB";
-  return (sizeInBytes / (1024 * 1024)).toFixed(2) + " MB";
+  if (!sizeInBytes) return '0 MB';
+  return (sizeInBytes / (1024 * 1024)).toFixed(2) + ' MB';
 };
 
 const formatDateTime = (isoString) => {
-  if (!isoString) return "-";
+  if (!isoString) return '-';
   const date = new Date(isoString);
   const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, "0");
-  const day = String(date.getDate()).padStart(2, "0");
-  const hours = String(date.getHours()).padStart(2, "0");
-  const minutes = String(date.getMinutes()).padStart(2, "0");
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  const hours = String(date.getHours()).padStart(2, '0');
+  const minutes = String(date.getMinutes()).padStart(2, '0');
   return `${year}-${month}-${day} ${hours}:${minutes}`;
 };
 
 const FilesPage = () => {
   const dispatch = useDispatch();
   const [searchParams] = useSearchParams();
-  const userId = searchParams.get("user_id");
+  const userId = searchParams.get('user_id');
   const { files, loading: isLoading, error } = useSelector(
-    (state) => state.files
+    (state) => state.files,
   );
 
   const { isAuthenticated, user: currentUser } = useSelector(
-    (state) => state.auth
+    (state) => state.auth,
   );
 
   const [renameModal, setRenameModal] = useState({
     visible: false,
     fileId: null,
-    file_name: "",
-    comment: "",
+    file_name: '',
+    comment: '',
   });
 
   useEffect(() => {
@@ -55,7 +55,7 @@ const FilesPage = () => {
       const paramUserId = userId && !currentUser?.is_staff ? null : userId;
       dispatch(getFilesList({ userId: paramUserId }))
         .unwrap()
-        .catch(() => message.error("Ошибка загрузки списка файлов"));
+        .catch(() => message.error('Ошибка загрузки списка файлов'));
     }
     return () => {
       dispatch(clearError());
@@ -75,10 +75,10 @@ const FilesPage = () => {
       .then(() => {
         dispatch(getFilesList({ userId: userId || null }))
           .unwrap()
-          .catch(() => message.error("Ошибка обновления списка файлов"));
-        message.success("Файл удален");
+          .catch(() => message.error('Ошибка обновления списка файлов'));
+        message.success('Файл удален');
       })
-      .catch(() => message.error("Ошибка удаления"));
+      .catch(() => message.error('Ошибка удаления'));
   };
 
   const handleRename = (file) => {
@@ -86,14 +86,14 @@ const FilesPage = () => {
       visible: true,
       fileId: file.id,
       file_name: file.file_name,
-      comment: file.comment || "",
+      comment: file.comment || '',
     });
   };
 
   const handleDownload = (fileId) => {
     dispatch(downloadFile(fileId))
       .unwrap()
-      .catch(() => message.error("Ошибка скачивания"));
+      .catch(() => message.error('Ошибка скачивания'));
   };
 
   const handleGetLink = (fileId) => {
@@ -101,26 +101,26 @@ const FilesPage = () => {
       .unwrap()
       .then((link) => {
         navigator.clipboard.writeText(link);
-        message.success("Ссылка скопирована в буфер обмена");
+        message.success('Ссылка скопирована в буфер обмена');
       })
-      .catch(() => message.error("Ошибка получения ссылки"));
+      .catch(() => message.error('Ошибка получения ссылки'));
   };
 
   const handleView = (fileId) => {
     dispatch(viewFile(fileId))
       .unwrap()
-      .catch(() => message.error("Ошибка просмотра"));
+      .catch(() => message.error('Ошибка просмотра'));
   };
 
   if (!isAuthenticated) {
     return (
       <div className="page-center" style={{ padding: 20 }}>
         <h1>Ваши файлы</h1>
-        <p style={{ color: "#ccc" }}>
-          Пожалуйста,{" "}
-          <Link to="/login" style={{ color: "#8ef064", textDecoration: "none" }}>
+        <p style={{ color: '#ccc' }}>
+          Пожалуйста,{' '}
+          <Link to="/login" style={{ color: '#8ef064', textDecoration: 'none' }}>
             войдите
-          </Link>{" "}
+          </Link>{' '}
           чтобы просмотреть файлы
         </p>
       </div>
@@ -141,7 +141,7 @@ const FilesPage = () => {
               <div className="file-icon">📄</div>
               <div className="file-info">
                 <strong>{file.file_name}</strong>
-                <p>{file.comment || "Без комментария"}</p>
+                <p>{file.comment || 'Без комментария'}</p>
                 <p>Размер: {formatSizeMB(file.size)}</p>
                 <p>Загружен: {formatDateTime(file.uploaded)}</p>
               </div>
@@ -172,29 +172,29 @@ const FilesPage = () => {
               fileId: renameModal.fileId,
               file_name: renameModal.file_name,
               comment: renameModal.comment,
-            })
+            }),
           )
             .unwrap()
             .then(() => {
               setRenameModal({
                 visible: false,
                 fileId: null,
-                file_name: "",
-                comment: "",
+                file_name: '',
+                comment: '',
               });
               dispatch(getFilesList({ userId: userId || null }))
                 .unwrap()
-                .catch(() => message.error("Ошибка обновления списка файлов"));
-              message.success("Файл обновлен");
+                .catch(() => message.error('Ошибка обновления списка файлов'));
+              message.success('Файл обновлен');
             })
-            .catch(() => message.error("Ошибка обновления"));
+            .catch(() => message.error('Ошибка обновления'));
         }}
         onCancel={() =>
           setRenameModal({
             visible: false,
             fileId: null,
-            file_name: "",
-            comment: "",
+            file_name: '',
+            comment: '',
           })
         }
       >
@@ -204,7 +204,7 @@ const FilesPage = () => {
             setRenameModal({ ...renameModal, file_name: e.target.value })
           }
           placeholder="Новое имя файла"
-          style={{ marginBottom: "10px" }}
+          style={{ marginBottom: '10px' }}
         />
         <Input.TextArea
           value={renameModal.comment}

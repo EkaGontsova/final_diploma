@@ -15,7 +15,7 @@ export const getUsersList = createAsyncThunk(
     } catch {
       return rejectWithValue('Не удалось загрузить список пользователей');
     }
-  }
+  },
 );
 
 export const deleteUser = createAsyncThunk(
@@ -30,5 +30,5 @@ export const deleteUser = createAsyncThunk(
     } catch {
       return rejectWithValue('Не удалось удалить пользователя');
     }
-  }
+  },
 );

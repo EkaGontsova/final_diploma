@@ -15,27 +15,27 @@ export const registerUser = createAsyncThunk(
       });
       return response.data;
     } catch (err) {
-  const errors = err.response?.data;
-  if (errors) {
-    if (errors.username) {
-      return rejectWithValue('Ошибка! Пользователь с таким логином уже существует');
-    }
-    if (errors.email) {
-      return rejectWithValue('Ошибка! Пользователь с таким email уже существует');
-    }
-    let message = '';
-    for (const key in errors) {
-      if (Array.isArray(errors[key])) {
-        message += `${key}: ${errors[key].join(' ')}\n`;
-      } else {
-        message += `${key}: ${errors[key]}\n`;
+      const errors = err.response?.data;
+      if (errors) {
+        if (errors.username) {
+          return rejectWithValue('Ошибка! Пользователь с таким логином уже существует');
+        }
+        if (errors.email) {
+          return rejectWithValue('Ошибка! Пользователь с таким email уже существует');
+        }
+        let message = '';
+        for (const key in errors) {
+          if (Array.isArray(errors[key])) {
+            message += `${key}: ${errors[key].join(' ')}\n`;
+          } else {
+            message += `${key}: ${errors[key]}\n`;
+          }
+        }
+        return rejectWithValue(message.trim());
       }
+      return rejectWithValue('Ошибка регистрации. Попробуйте позже.');
     }
-    return rejectWithValue(message.trim());
-  }
-  return rejectWithValue('Ошибка регистрации. Попробуйте позже.');
-}
-    }
+  },
 );
 
 export const loginUser = createAsyncThunk(
@@ -50,12 +50,12 @@ export const loginUser = createAsyncThunk(
     } catch (err) {
       return rejectWithValue(err.response?.data?.detail || 'Ошибка! Неправильный логин или пароль');
     }
-  }
+  },
 );
 
 export const logoutUser = createAsyncThunk(
   'auth/logout',
   async () => {
     return {};
-  }
+  },
 );

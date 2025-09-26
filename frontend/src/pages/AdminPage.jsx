@@ -1,20 +1,20 @@
-import { useEffect } from "react";
-import { Link } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 import {
   getUsersList,
   deleteUser,
   updateAdminStatus,
   clearError,
-} from "../store/usersSlice";
-import Loading from "../components/Loading";
-import { message } from "antd";
+} from '../store/usersSlice';
+import Loading from '../components/Loading';
+import { message } from 'antd';
 
 const AdminPage = () => {
   const dispatch = useDispatch();
   const { users, loading, error } = useSelector((state) => state.users);
   const { isAuthenticated, user: currentUser } = useSelector(
-    (state) => state.auth
+    (state) => state.auth,
   );
 
   useEffect(() => {
@@ -22,7 +22,7 @@ const AdminPage = () => {
       dispatch(getUsersList())
         .unwrap()
         .catch(() => {
-          message.error("Ошибка загрузки списка пользователей");
+          message.error('Ошибка загрузки списка пользователей');
         });
     }
     return () => {
@@ -41,11 +41,11 @@ const AdminPage = () => {
     return (
       <div className="page-center" style={{ padding: 20 }}>
         <h1>Нет доступа</h1>
-        <p style={{ color: "#ccc" }}>
-          Пожалуйста,{" "}
-          <Link to="/login" style={{ color: "#8ef064", textDecoration: "none" }}>
+        <p style={{ color: '#ccc' }}>
+          Пожалуйста,{' '}
+          <Link to="/login" style={{ color: '#8ef064', textDecoration: 'none' }}>
             войдите
-          </Link>{" "}
+          </Link>{' '}
           для доступа к административной панели
         </p>
       </div>
@@ -55,30 +55,30 @@ const AdminPage = () => {
     return (
       <div className="page-center" style={{ padding: 20 }}>
         <h1>Админ панель</h1>
-        <p style={{ color: "#ccc" }}>У вас нет доступа к этой странице.</p>
+        <p style={{ color: '#ccc' }}>У вас нет доступа к этой странице.</p>
       </div>
     );
   }
 
   const formatSizeMB = (sizeInBytes) => {
-    if (!sizeInBytes) return "0 MB";
-    return (sizeInBytes / (1024 * 1024)).toFixed(2) + " MB";
+    if (!sizeInBytes) return '0 MB';
+    return (sizeInBytes / (1024 * 1024)).toFixed(2) + ' MB';
   };
 
   const handleDeleteUser = (userId) => {
-    if (window.confirm("Вы уверены, что хотите удалить этого пользователя?")) {
+    if (window.confirm('Вы уверены, что хотите удалить этого пользователя?')) {
       dispatch(deleteUser(userId))
         .unwrap()
         .then(() => {
           dispatch(getUsersList())
             .unwrap()
             .catch(() => {
-              message.error("Ошибка обновления списка пользователей");
+              message.error('Ошибка обновления списка пользователей');
             });
-          message.success("Пользователь удалён");
+          message.success('Пользователь удалён');
         })
         .catch(() => {
-          message.error("Ошибка при удалении пользователя");
+          message.error('Ошибка при удалении пользователя');
         });
     }
   };
@@ -91,12 +91,12 @@ const AdminPage = () => {
         dispatch(getUsersList())
           .unwrap()
           .catch(() => {
-            message.error("Ошибка обновления списка пользователей");
+            message.error('Ошибка обновления списка пользователей');
           });
-        message.success("Статус администратора обновлен");
+        message.success('Статус администратора обновлен');
       })
       .catch(() => {
-        message.error("Ошибка при обновлении статуса администратора");
+        message.error('Ошибка при обновлении статуса администратора');
       });
   };
 
@@ -111,10 +111,10 @@ const AdminPage = () => {
             <div>
               <strong>{user.username}</strong> ({user.full_name}) - {user.email}
             </div>
-            <div>Админ: {user.is_staff ? "Да" : "Нет"}</div>
+            <div>Админ: {user.is_staff ? 'Да' : 'Нет'}</div>
             <div>Путь к хранилищу: {user.storage_path}</div>
             <div>
-              Файлов: {user.files_count}, Общий размер:{" "}
+              Файлов: {user.files_count}, Общий размер:{' '}
               {formatSizeMB(user.total_size)}
             </div>
             <div className="user-card-actions">

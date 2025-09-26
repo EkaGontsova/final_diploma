@@ -17,7 +17,7 @@ export const getFilesList = createAsyncThunk(
     } catch {
       return rejectWithValue('Не удалось загрузить список файлов');
     }
-  }
+  },
 );
 
 export const uploadFile = createAsyncThunk(
@@ -36,7 +36,7 @@ export const uploadFile = createAsyncThunk(
     } catch {
       return rejectWithValue('Не удалось загрузить файл');
     }
-  }
+  },
 );
 
 export const deleteFile = createAsyncThunk(
@@ -51,7 +51,7 @@ export const deleteFile = createAsyncThunk(
     } catch {
       return rejectWithValue('Не удалось удалить файл');
     }
-  }
+  },
 );
 
 export const changeFile = createAsyncThunk(
@@ -66,13 +66,13 @@ export const changeFile = createAsyncThunk(
       const response = await axios.patch(
         `${API_BASE}/files/${fileId}/`,
         body,
-        { headers: { Authorization: `Token ${token}` } }
+        { headers: { Authorization: `Token ${token}` } },
       );
       return response.data;
     } catch {
       return rejectWithValue('Не удалось отредактировать файл');
     }
-  }
+  },
 );
 
 export const downloadFile = createAsyncThunk(
@@ -103,7 +103,7 @@ export const downloadFile = createAsyncThunk(
     } catch {
       return rejectWithValue('Не удалось скачать файл');
     }
-  }
+  },
 );
 
 export const getFileLink = createAsyncThunk(
@@ -118,7 +118,7 @@ export const getFileLink = createAsyncThunk(
     } catch {
       return rejectWithValue('Не удалось сгенерировать ссылку');
     }
-  }
+  },
 );
 
 export const viewFile = createAsyncThunk(
@@ -143,7 +143,7 @@ export const viewFile = createAsyncThunk(
     } catch {
       return rejectWithValue('Не удалось открыть файл для просмотра');
     }
-  }
+  },
 );
 
 const filesSlice = createSlice({

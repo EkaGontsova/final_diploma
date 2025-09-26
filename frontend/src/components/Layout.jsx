@@ -1,8 +1,8 @@
-import { Outlet, NavLink, useLocation, useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { logout } from "../store/authSlice";
-import { Button } from "antd";
-import cloudLogo from "../assets/cloud_logo.png";
+import { Outlet, NavLink, useLocation, useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { logout } from '../store/authSlice';
+import { Button } from 'antd';
+import cloudLogo from '../assets/cloud_logo.png';
 
 const Layout = () => {
   const { isAuthenticated, user } = useSelector((state) => state.auth);
@@ -12,14 +12,14 @@ const Layout = () => {
 
   const handleLogout = () => {
     dispatch(logout());
-    navigate("/");
+    navigate('/');
   };
 
   return (
     <div className="layout">
       <header className="header">
         <div className="header-content">
-          <div onClick={() => navigate("/")} className="home">
+          <div onClick={() => navigate('/')} className="home">
             <img src={cloudLogo} alt="Cloud Logo" className="cloud-logo" />
             <span className="logo-text">MyCloud</span>
           </div>
@@ -28,24 +28,24 @@ const Layout = () => {
 
           <div className="nav">
             {!isAuthenticated ? (
-  <>
-    {location.pathname === "/" && (
-      <NavLink to="/register">
-        <Button type="primary">Регистрация</Button>
-      </NavLink>
-    )}
-    {location.pathname === "/" && (
-      <NavLink to="/login">
-        <Button type="default">Вход</Button>
-      </NavLink>
-    )}
-  </>
-) : (
-  <>
-    <span>Здравствуйте, {user?.username}</span>
-    <Button type="default" onClick={handleLogout}>Выход</Button>
-  </>
-)}
+              <>
+                {location.pathname === '/' && (
+                  <NavLink to="/register">
+                    <Button type="primary">Регистрация</Button>
+                  </NavLink>
+                )}
+                {location.pathname === '/' && (
+                  <NavLink to="/login">
+                    <Button type="default">Вход</Button>
+                  </NavLink>
+                )}
+              </>
+            ) : (
+              <>
+                <span>Здравствуйте, {user?.username}</span>
+                <Button type="default" onClick={handleLogout}>Выход</Button>
+              </>
+            )}
           </div>
         </div>
       </header>

@@ -4,11 +4,11 @@ import usersSlice from './usersSlice';
 import filesSlice from './filesSlice';
 
 const rootReducer = combineReducers({
-    auth: authSlice,
-    users: usersSlice,
-    files: filesSlice,
+  auth: authSlice,
+  users: usersSlice,
+  files: filesSlice,
 });
 
 export const store = configureStore({
-    reducer: rootReducer,
+  reducer: rootReducer,
 });

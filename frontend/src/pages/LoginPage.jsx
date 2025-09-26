@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { loginUser, clearError } from '../store/authSlice';
 import { message } from 'antd';
 
-const LoginPage = ({ title = "Вход", buttonText = "Войти" }) => {
+const LoginPage = ({ title = 'Вход', buttonText = 'Войти' }) => {
   const { isAuthenticated, user, error, isLoading } = useSelector(state => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -37,7 +37,7 @@ const LoginPage = ({ title = "Вход", buttonText = "Войти" }) => {
     dispatch(loginUser({ username, password }))
       .unwrap()
       .catch(err => {
-        const errorMsg = err?.message || err || "Ошибка при входе";
+        const errorMsg = err?.message || err || 'Ошибка при входе';
         message.error(errorMsg);
       });
   };

@@ -1,10 +1,10 @@
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 
 const ErrorPage = () => (
   <div className="page-center" style={{ padding: 20 }}>
     <h1
       style={{
-        color: "#fff",
+        color: '#fff',
         marginBottom: 20,
       }}
     >
@@ -12,7 +12,7 @@ const ErrorPage = () => (
     </h1>
     <p
       style={{
-        color: "#ccc",
+        color: '#ccc',
         marginBottom: 20,
       }}
     >
@@ -21,9 +21,9 @@ const ErrorPage = () => (
     <Link
       to="/"
       style={{
-        color: "#8ef064",
-        textDecoration: "none",
-        fontSize: "18px",
+        color: '#8ef064',
+        textDecoration: 'none',
+        fontSize: '18px',
       }}
     >
       На главную

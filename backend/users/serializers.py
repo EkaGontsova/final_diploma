@@ -103,9 +103,7 @@ class UserSerializer(serializers.ModelSerializer):
         try:
             validate_email(value)
         except DjangoValidationError:
-            raise serializers.ValidationError(
-                "Неверный формат email."
-            )
+            raise serializers.ValidationError("Неверный формат email.")
         if User.objects.filter(email=value.lower()).exists():
             raise serializers.ValidationError(
                 "Пользователь с таким email уже существует."

@@ -1,26 +1,26 @@
-import { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { registerUser, clearError } from "../store/authSlice";
-import { message } from "antd";
+import { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { registerUser, clearError } from '../store/authSlice';
+import { message } from 'antd';
 
 const RegisterPage = ({
-  title = "Регистрация",
-  buttonText = "Зарегистрироваться",
+  title = 'Регистрация',
+  buttonText = 'Зарегистрироваться',
 }) => {
   const { isAuthenticated, error, isLoading } = useSelector(
-    (state) => state.auth
+    (state) => state.auth,
   );
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [fullName, setFullName] = useState("");
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [fullName, setFullName] = useState('');
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   useEffect(() => {
-    if (isAuthenticated) navigate("/files");
+    if (isAuthenticated) navigate('/files');
     return () => {
       dispatch(clearError());
     };
@@ -38,7 +38,7 @@ const RegisterPage = ({
     dispatch(registerUser({ username, email, password, full_name: fullName }))
       .unwrap()
       .catch(err => {
-        const errorMsg = err?.message || err || "Ошибка при регистрации";
+        const errorMsg = err?.message || err || 'Ошибка при регистрации';
         message.error(errorMsg);
       });
   };
