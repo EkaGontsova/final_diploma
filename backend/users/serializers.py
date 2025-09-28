@@ -56,7 +56,7 @@ class AdminSerializer(serializers.ModelSerializer):
         return obj.files.count()
 
     def get_total_size(self, obj):
-        return sum(file.size for file in obj.files.all())
+        return sum(file.size or 0 for file in obj.files.all())
 
 
 class UserSerializer(serializers.ModelSerializer):

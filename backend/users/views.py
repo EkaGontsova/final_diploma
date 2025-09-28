@@ -104,7 +104,7 @@ class UpdateAdminStatusView(generics.UpdateAPIView):
 
 class DeleteUserView(generics.DestroyAPIView):
     queryset = User.objects.all()
-    permission_classes = [IsAuthenticated, IsAdminUser]
+    permission_classes = [IsAuthenticated]
 
     def destroy(self, request, *args, **kwargs):
         instance = self.get_object()
@@ -115,7 +115,4 @@ class DeleteUserView(generics.DestroyAPIView):
                 status=status.HTTP_403_FORBIDDEN,
             )
         self.perform_destroy(instance)
-        return Response(
-            {"message": "Пользователь удалён."},
-            status=status.HTTP_204_NO_CONTENT,
-        )
+        return Response(status=status.HTTP_204_NO_CONTENT)

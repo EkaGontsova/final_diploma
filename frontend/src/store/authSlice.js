@@ -2,13 +2,15 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';  
 import { loginUser, logoutUser, registerUser } from './services/authServices';
 
+const API_BASE = '/api/users';
+
 export const loadUserFromToken = createAsyncThunk(
   'auth/loadUserFromToken',
   async (_, { rejectWithValue }) => {
     const token = localStorage.getItem('token');
     if (!token) return rejectWithValue('No token');
     try {
-      const response = await axios.get('http://localhost:8000/api/users/profile/', {
+      const response = await axios.get(`${API_BASE}/profile/`, {
         headers: { Authorization: `Token ${token}` },
       });
       return { user: response.data, token };

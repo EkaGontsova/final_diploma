@@ -9,7 +9,7 @@
 .env
 
 # Virtual environment
-/venv/
+**/venv/
 
 # Node modules
 /frontend/node_modules/
